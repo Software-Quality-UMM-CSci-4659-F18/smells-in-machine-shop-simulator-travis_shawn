@@ -2,6 +2,8 @@
 
 package applications;
 
+import dataStructures.LinkedQueue;
+
 public class MachineShopSimulator {
     
     public static final String NUMBER_OF_MACHINES_MUST_BE_AT_LEAST_1 = "number of machines must be >= 1";
@@ -30,13 +32,16 @@ public class MachineShopSimulator {
             return false;
         } else {// theJob has a next task
                 // get machine for next task
-            int p = ((Task) theJob.getTaskQ().getFrontElement()).getMachine();
+
+            int machineNum = theJob.getMachineNumber();
+
+            //int p = ((Task) theJob.getTaskQ().getFrontElement()).getMachine();
             // put on machine p's wait queue
-            machine[p].getJobQ().put(theJob);
+            machine[machineNum].putJob(theJob);
             theJob.setArrivalTime(timeNow);
             // if p idle, schedule immediately
-            if (eList.nextEventTime(p) == largeTime) {// machine is idle
-                changeState(p);
+            if (eList.nextEventTime(machineNum) == largeTime) {// machine is idle
+                changeState(machineNum);
             }
             return true;
         }

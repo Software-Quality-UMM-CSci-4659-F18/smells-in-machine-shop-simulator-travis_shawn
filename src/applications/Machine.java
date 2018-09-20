@@ -15,6 +15,14 @@ class Machine {
         jobQ = new LinkedQueue();
     }
 
+    /**
+     * This method puts the job into the Job queue
+     * @param theJob
+     */
+    public void putJob(Job theJob){
+        jobQ.put(theJob);
+    }
+
     public LinkedQueue getJobQ() {
         return jobQ;
     }

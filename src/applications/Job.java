@@ -18,6 +18,7 @@ class Job {
 
     // other methods
     public void addTask(int theMachine, int theTime) {
+
         getTaskQ().put(new Task(theMachine, theTime));
     }
 
@@ -28,6 +29,17 @@ class Job {
         int theTime = ((Task) getTaskQ().remove()).getTime();
         length = getLength() + theTime;
         return theTime;
+    }
+
+
+    /**
+     * This method extracts the Machine number from the job
+     * @return
+     */
+    public int getMachineNumber(){
+        Object frontElement = taskQ.getFrontElement();
+        int machineNum = ((Task)frontElement).getMachine();
+        return machineNum;
     }
 
     public LinkedQueue getTaskQ() {

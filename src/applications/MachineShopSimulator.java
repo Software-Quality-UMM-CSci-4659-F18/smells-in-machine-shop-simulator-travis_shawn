@@ -35,7 +35,6 @@ public class MachineShopSimulator {
 
             int machineNum = theJob.getMachineNumber();
 
-            //int p = ((Task) theJob.getTaskQ().getFrontElement()).getMachine();
             // put on machine p's wait queue
             machine[machineNum].putJob(theJob);
             theJob.setArrivalTime(timeNow);
@@ -91,19 +90,21 @@ public class MachineShopSimulator {
         // input the jobs
         Job theJob;
         for (int i = 1; i <= specification.getNumJobs(); i++) {
-            int tasks = specification.getJobSpecifications(i).getNumTasks();
+            JobSpecification taskArray = specification.getJobSpecifications(i);
+            int tasks = taskArray.getNumTasks();
             int firstMachine = 0; // machine for first task
 
             // create the job
             theJob = new Job(i);
             for (int j = 1; j <= tasks; j++) {
-                int theMachine = specification.getJobSpecifications(i).getSpecificationsForTasks()[2*(j-1)+1];
-                int theTaskTime = specification.getJobSpecifications(i).getSpecificationsForTasks()[2*(j-1)+2];
+                int theMachine = specification.getSpecification(i, 2*(j-1)+1);
+                int theTaskTime = specification.getSpecification(i, 2*(j-1)+2);
                 if (j == 1)
                     firstMachine = theMachine; // job's first machine
                 theJob.addTask(theMachine, theTaskTime); // add to
             } // task queue
-            machine[firstMachine].getJobQ().put(theJob);
+            machine[firstMachine].putJob(theJob);
+
         }
     }
 

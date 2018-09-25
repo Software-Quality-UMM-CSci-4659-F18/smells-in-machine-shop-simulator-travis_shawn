@@ -66,8 +66,10 @@ public class MachineShopSimulator {
                         .remove());
                 currentMachine.setTotalWait(timeNow);
                 currentMachine.setNumTasks(currentMachine.getNumTasks() + 1);
-                int t = currentMachine.getActiveJob().removeNextTask();
-                eList.setFinishTime(theMachine, timeNow + t);
+                Job currentJob = currentMachine.getActiveJob();
+                int removed = currentJob.removeNextTask();
+
+                eList.setFinishTime(theMachine, timeNow + removed);
             }
         } else {// task has just finished on machine[theMachine]
                 // schedule change-over time

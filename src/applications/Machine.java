@@ -43,10 +43,7 @@ class Machine {
         int delay = getTotalWait();
         Job activeJob = getActiveJob();
         int arrivalTime = activeJob.getArrivalTime();
-
         this.totalWait = (delay + timeNow) - arrivalTime;
-
-
     }
 
     public int getNumTasks() {

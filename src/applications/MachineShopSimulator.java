@@ -2,10 +2,7 @@
 
 package applications;
 
-import dataStructures.LinkedQueue;
-
 public class MachineShopSimulator {
-    
     public static final String NUMBER_OF_MACHINES_MUST_BE_AT_LEAST_1 = "number of machines must be >= 1";
     public static final String NUMBER_OF_MACHINES_AND_JOBS_MUST_BE_AT_LEAST_1 = "number of machines and jobs must be >= 1";
     public static final String CHANGE_OVER_TIME_MUST_BE_AT_LEAST_0 = "change-over time must be >= 0";
@@ -68,7 +65,6 @@ public class MachineShopSimulator {
                 currentMachine.setNumTasks(currentMachine.getNumTasks() + 1);
                 Job currentJob = currentMachine.getActiveJob();
                 int removed = currentJob.removeNextTask();
-
                 eList.setFinishTime(theMachine, timeNow + removed);
             }
         } else {// task has just finished on machine[theMachine]
@@ -78,7 +74,6 @@ public class MachineShopSimulator {
             eList.setFinishTime(theMachine, timeNow
                     + currentMachine.getChangeTime());
         }
-
         return lastJob;
     }
 

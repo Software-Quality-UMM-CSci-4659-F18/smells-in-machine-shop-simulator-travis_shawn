@@ -37,8 +37,7 @@ class Machine {
     }
 
     public void setTotalWait(int timeNow) {
-        int arrivalTime = activeJob.getArrivalTime();
-        totalWait = (totalWait + timeNow) - arrivalTime;
+        totalWait = (totalWait + timeNow) - activeJob.getArrivalTime();
     }
 
     public int getNumTasks() {

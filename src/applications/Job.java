@@ -31,10 +31,7 @@ class Job {
     }
 
 
-    /**
-     * This method extracts the Machine number from the job
-     * @return
-     */
+    /**This method extracts the Machine number from the job*/
     public int getMachineNumber(){
         Object frontElement = taskQ.getFrontElement();
         int machineNum = ((Task)frontElement).getMachine();

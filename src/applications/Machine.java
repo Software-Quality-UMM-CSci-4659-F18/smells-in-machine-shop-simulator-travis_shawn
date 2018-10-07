@@ -15,6 +15,11 @@ class Machine {
         jobQ = new LinkedQueue();
     }
 
+    /**This method puts the job into the Job queue*/
+    public void putJob(Job job){
+        jobQ.put(job);
+    }
+
     public LinkedQueue getJobQ() {
         return jobQ;
     }
@@ -31,8 +36,8 @@ class Machine {
         return totalWait;
     }
 
-    public void setTotalWait(int totalWait) {
-        this.totalWait = totalWait;
+    public void setTotalWait(int timeNow) {
+        totalWait = (totalWait + timeNow) - activeJob.getArrivalTime();
     }
 
     public int getNumTasks() {

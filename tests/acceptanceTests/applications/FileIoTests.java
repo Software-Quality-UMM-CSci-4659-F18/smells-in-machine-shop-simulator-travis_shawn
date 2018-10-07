@@ -32,7 +32,7 @@ public class FileIoTests {
      * For each file in the Test_files directory with a name of the form
      * *.input, run the simulator with that as input, save the output
      * to a temp file, and compare that to the expected output file.
-     * @throws IOException 
+     * @throws IOException
      */
     @Test
     public final void runFileBasedTests() throws IOException {

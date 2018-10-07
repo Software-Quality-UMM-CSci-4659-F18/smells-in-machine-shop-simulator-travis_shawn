@@ -30,6 +30,13 @@ class Job {
         return theTime;
     }
 
+
+    /**This method extracts the Machine number from the job*/
+    public int getMachineNumber(){
+        Task firstTask = (Task)taskQ.getFrontElement();
+        return firstTask.getMachine();
+    }
+
     public LinkedQueue getTaskQ() {
         return taskQ;
     }

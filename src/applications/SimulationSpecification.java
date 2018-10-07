@@ -32,6 +32,10 @@ public class SimulationSpecification {
         return changeOverTimes[machineNumber];
     }
 
+    public int getSpecification(int positionOfJob, int positionOfTask){
+        return jobSpecifications[positionOfJob].getSpecificationsForTasks()[positionOfTask];
+    }
+
     public void setSpecificationsForTasks(int jobNumber, int[] specificationsForTasks) {
         jobSpecifications[jobNumber].setSpecificationsForTasks(specificationsForTasks);
     }

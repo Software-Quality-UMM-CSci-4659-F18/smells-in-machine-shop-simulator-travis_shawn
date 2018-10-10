@@ -21,7 +21,7 @@ public class SimulationResults {
         }
 
         System.out.println("Finish time = " + finishTime);
-        for (int p = 1; p <= numMachines; p++) {
+        for (int p = 1; p < numMachines; p++) {
             System.out.println("Machine " + p + " completed "
                     + numTasksPerMachine[p] + " tasks");
             System.out.println("The total wait time was "

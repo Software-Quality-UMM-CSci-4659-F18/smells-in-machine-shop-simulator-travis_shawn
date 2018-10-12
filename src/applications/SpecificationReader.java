@@ -52,8 +52,8 @@ public class SpecificationReader {
                 if (theMachine < 1 || theMachine > specification.getNumMachines()
                         || theTaskTime < 1)
                     throw new MyInputException(MachineShopSimulator.BAD_MACHINE_NUMBER_OR_TASK_TIME);
-                specificationsForTasks[2*(j-1)+2] = theMachine;
-                specificationsForTasks[2*(j-1)+3] = theTaskTime;
+                specificationsForTasks[2*j] = theMachine - 1;
+                specificationsForTasks[2*j + 1] = theTaskTime;
             }
             specification.setSpecificationsForTasks(i, specificationsForTasks);
         }

@@ -38,28 +38,28 @@ public class SimulationSpecificationGenerator extends Generator<SimulationSpecif
         // so I have to make the array one too large and skip the first
         // slot.
         int[] changeOverTimes = new int[numMachines + 1];
-        for (int i=1; i<=numMachines; ++i) {
+        for (int i=0; i<numMachines; ++i) {
             // Changeover times can be 0 so I don't need to add 1 here.
             changeOverTimes[i] = r.nextInt(MAX_CHANGEOVER_TIME);
         }
         result.setChangeOverTimes(changeOverTimes);
 
         JobSpecification[] jobSpecifications = new JobSpecification[numJobs + 1];
-        for (int i=1; i<=numJobs; ++i) {
+        for (int i=0; i<numJobs; ++i) {
             jobSpecifications[i] = new JobSpecification();
         }
         result.setJobSpecification(jobSpecifications);
-        for (int i=1; i<=numJobs; ++i) {
+        for (int i=0; i<numJobs; ++i) {
             int numTasks = r.nextInt(MAX_TASKS) + 1;
             jobSpecifications[i].setNumTasks(numTasks);
 
             int[] specificationsForTasks = new int[2 * numTasks + 1];
 
-            for (int j = 1; j <= numTasks; ++j) {
+            for (int j =  0; j < numTasks; ++j) {
                 int theMachine = r.nextInt(numMachines) + 1;
                 int theTaskTime = r.nextInt(MAX_TASK_TIME) + 1;
-                specificationsForTasks[2 * (j - 1) + 1] = theMachine;
-                specificationsForTasks[2 * (j - 1) + 2] = theTaskTime;
+                specificationsForTasks[2 * j] = theMachine - 1;
+                specificationsForTasks[2 * j + 1] = theTaskTime;
             }
             result.setSpecificationsForTasks(i, specificationsForTasks);
         }
@@ -104,7 +104,7 @@ public class SimulationSpecificationGenerator extends Generator<SimulationSpecif
         int machineToRemove = r.nextInt(originalNumMachines) + 1;
 
         int[] newChangeOvers = new int[originalNumMachines];
-        for (int i=1, j=1; i<=originalNumMachines; ++i) {
+        for (int i= 0, j=0; i<originalNumMachines; ++i) {
             if (i != machineToRemove) {
                 newChangeOvers[j] = spec.getChangeOverTimes(i);
                 ++j;
@@ -112,14 +112,14 @@ public class SimulationSpecificationGenerator extends Generator<SimulationSpecif
         }
         smallerSpec.setChangeOverTimes(newChangeOvers);
 
-        JobSpecification[] newJobSpecs = new JobSpecification[numJobs+1];
-        for (int i=1; i<=numJobs; ++i) {
+        JobSpecification[] newJobSpecs = new JobSpecification[numJobs];
+        for (int i=0; i<numJobs; ++i) {
             JobSpecification jobSpec = spec.getJobSpecifications(i);
             int numTasks = jobSpec.getNumTasks();
             int[] specsForTasks = jobSpec.getSpecificationsForTasks();
             int numTasksOnThisMachine = 0;
-            for (int j=1; j<=numTasks; ++j) {
-                if (specsForTasks[2*(j-1)+1] == machineToRemove) {
+            for (int j=0; j<numTasks; ++j) {
+                if (specsForTasks[2*j] == machineToRemove) {
                     ++numTasksOnThisMachine;
                 }
             }
@@ -132,15 +132,15 @@ public class SimulationSpecificationGenerator extends Generator<SimulationSpecif
             }
 
             final int newNumTasks = numTasks - numTasksOnThisMachine;
-            int[] newSpecsForTasks = new int[2* newNumTasks + 1];
-            for (int j=1, k=1; j<=numTasks; ++j) {
-                int machine = specsForTasks[2*(j-1)+1];
+            int[] newSpecsForTasks = new int[2* newNumTasks];
+            for (int j = 0, k = 0; j<=numTasks; ++j) {
+                int machine = specsForTasks[2*j];
                 if (machine != machineToRemove) {
                     if (machine > machineToRemove) {
                         --machine;
                     }
-                    newSpecsForTasks[2*(k-1)+1] = machine;
-                    newSpecsForTasks[2*(k-1)+2] = specsForTasks[2*(j-1)+2];
+                    newSpecsForTasks[2*k] = machine - 1;
+                    newSpecsForTasks[2*k+1] = specsForTasks[2*j+1];
                     ++k;
                 }
             }
@@ -164,8 +164,8 @@ public class SimulationSpecificationGenerator extends Generator<SimulationSpecif
         smallerSpec.setNumMachines(numMachines);
         smallerSpec.setNumJobs(originalNumJobs-1);
 
-        int[] changeOverTimes = new int[numMachines + 1];
-        for (int i=1; i<=numMachines; ++i) {
+        int[] changeOverTimes = new int[numMachines];
+        for (int i = 0; i < numMachines; ++i) {
             changeOverTimes[i] = spec.getChangeOverTimes(i);
         }
         smallerSpec.setChangeOverTimes(changeOverTimes);
@@ -173,7 +173,7 @@ public class SimulationSpecificationGenerator extends Generator<SimulationSpecif
         int jobToRemove = r.nextInt(originalNumJobs) + 1;
 
         JobSpecification[] newJobSpecs = new JobSpecification[originalNumJobs];
-        for (int i=1, j=1; i<=originalNumJobs; ++i) {
+        for (int i = 0, j = 0; i < originalNumJobs; ++i) {
             if (i != jobToRemove) {
                 newJobSpecs[j] = spec.getJobSpecifications(i);
                 ++j;
@@ -188,7 +188,7 @@ public class SimulationSpecificationGenerator extends Generator<SimulationSpecif
         SimulationSpecification simulationSpecification = (SimulationSpecification) value;
         int size = simulationSpecification.getNumMachines();
         size += simulationSpecification.getNumJobs();
-        for (int i=1; i<=simulationSpecification.getNumJobs(); ++i) {
+        for (int i = 0; i < simulationSpecification.getNumJobs(); ++i) {
             size += simulationSpecification.getJobSpecifications(i).getNumTasks();
         }
 

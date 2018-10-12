@@ -62,7 +62,7 @@ public class MachineShopSimulator {
                 currentMachine.setActiveJob((Job) currentMachine.getJobQ()
                         .remove());
                 currentMachine.setTotalWait(timeNow);
-                currentMachine.setNumTasks(currentMachine.getNumTasks());
+                currentMachine.setNumTasks(currentMachine.getNumTasks() + 1);
                 Job currentJob = currentMachine.getActiveJob();
                 int removed = currentJob.removeNextTask();
                 eList.setFinishTime(theMachine, timeNow + removed);
